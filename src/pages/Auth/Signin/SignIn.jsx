@@ -19,8 +19,11 @@ import { useMutation } from "@tanstack/react-query";
 import { signinUser } from "../../../query/authqueries";
 import { object, string } from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../../../redux/slice/authReducer";
+import { getCart, updateCart } from "../../../query/cartqueries";
+import { addToCart, cartid } from "../../../redux/slice/cartControl";
+import useUpdatecart from "../../../hooks/useUpdatecart";
 
 const validationSchema = object({
   email: string().email("Invalid email address").required("Email is required"),
@@ -31,8 +34,12 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { mutate, isLoading } = useMutation(["signin"], signinUser, {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       dispatch(setToken(data));
+      const { cart } = await getCart(data.jwt);
+      console.log(cart);
+      dispatch(cartid(cart.id));
+      dispatch(addToCart(cart.mycart));
       navigate("/");
     },
     onError: (error) => {

@@ -1,10 +1,20 @@
-import { Box, Button, Card, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  SimpleGrid,
+  Stack,
+  Text,
+  useUpdateEffect,
+} from "@chakra-ui/react";
 import TopNav from "../components/TopNav/TopNav";
 import HomeBanner from "../components/home/HomeBanner";
 import ProductPageLayout from "../components/ProductList/ProductPageLayout";
 import useFetch from "../hooks/useFetch";
+import useUpdatecart from "../hooks/useUpdatecart";
 
 const HomePage = () => {
+  useUpdatecart();
   const { data: homePagemap, error: homepagemap } = useFetch(
     "/catagories?fields[0]=title&fields[1]=description&populate[0]=img"
   );
@@ -20,7 +30,7 @@ const HomePage = () => {
     <TopNav>
       <Stack spacing="0" overflowX="hidden">
         <HomeBanner />
-        <Stack py={["15px","80px"]}>
+        <Stack py={["15px", "80px"]}>
           <SimpleGrid
             columns={{
               base: "2",

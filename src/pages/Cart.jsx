@@ -11,12 +11,11 @@ import { CartItem } from "../components/cart/CartItem";
 import { CartOrderSummary } from "../components/cart/CartOrderSummary";
 import TopNav from "../components/TopNav/TopNav";
 import { useSelector } from "react-redux";
+import { updateCart } from "../query/cartqueries";
+import useUpdatecart from "../hooks/useUpdatecart";
 
 const Cart = () => {
-  const products = useSelector((state) => state.cart.products);
-  console.log(products);
-  const cartItems = products.length;
-
+const{products}=useUpdatecart();
   return (
     <TopNav>
       <Box
@@ -58,7 +57,10 @@ const Cart = () => {
           >
             <Heading fontSize="2xl" fontWeight="extrabold">
               Shopping Cart (
-              {cartItems === 1 ? `${cartItems} item` : `${cartItems}  items`})
+              {products.length === 1
+                ? `${products.length} item`
+                : `${products.length}  items`}
+              )
             </Heading>
 
             <Stack spacing="6">

@@ -28,6 +28,8 @@ import { clearToken } from "../../redux/slice/authReducer";
 const TopNav = ({ children }) => {
   const userData = useSelector((state) => state.auth.user);
   // console.log(userData);
+  const products = useSelector((state) => state.cart.products);
+
   const loggedIn = !!Object.keys(userData).length;
   const dispatch = useDispatch();
   const logOut = () => {
@@ -69,7 +71,7 @@ const TopNav = ({ children }) => {
   const pages = [
     { text: "Home", link: "/" },
     { text: "Product", link: "/products" },
-    { text: "Cart", link: "/cart" },
+    { text: `Cart`, link: "/cart" },
     { text: "Contact Us", link: "/contact" },
   ];
 
@@ -84,7 +86,16 @@ const TopNav = ({ children }) => {
         fontSize="16px"
         _hover={{ color: "#8B9CA3" }}
       >
-        {page.text}
+        {page.text === `Cart` ? (
+          <Flex align={"baseline"} gap={"1"}>
+            <Text fontWeight="400">Cart </Text>
+            <Text as="span" fontSize="sm" fontWeight="semibold">
+              {products.length}
+            </Text>
+          </Flex>
+        ) : (
+          page.text
+        )}
       </Link>
     ));
   };

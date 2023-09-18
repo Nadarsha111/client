@@ -22,7 +22,7 @@ const ProductCard = ({ value, title, price, oldprice, id, desc }) => {
   const handleAddToCart = (event) => {
     event.stopPropagation();
     dispatch(
-      addToCart({
+      addToCart([{
         id: id,
         title: title,
         desc: desc,
@@ -30,7 +30,7 @@ const ProductCard = ({ value, title, price, oldprice, id, desc }) => {
         img: value,
         oldprice: oldprice,
         quantity: 1,
-      })
+      }])
     );
   };
 

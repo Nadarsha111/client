@@ -8,17 +8,21 @@ export const QuantitySelect = (props) => {
   const quantityUpdate = (quantity) => {
     if (quantity > 0) {
       dispatch(
-        addToCart({
-          id: props.id,
-          quantity: quantity,
-        })
+        addToCart([
+          {
+            id: props.id,
+            quantity: quantity,
+          },
+        ])
       );
     } else {
       dispatch(
-        addToCart({
-          id: props.id,
-          quantity: 1,
-        })
+        addToCart([
+          {
+            id: props.id,
+            quantity: 1,
+          },
+        ])
       );
     }
   };

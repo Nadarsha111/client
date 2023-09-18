@@ -178,7 +178,6 @@ const Singleproduct = () => {
             mt={["8", "0"]}
           >
             <Button
-              // use the Button component to display the favorite button
               bgColor="#263A45"
               color="white"
               fontSize="16px"
@@ -187,15 +186,17 @@ const Singleproduct = () => {
               leftIcon={<AiOutlineShoppingCart size={"20px"} />}
               onClick={() => {
                 dispatch(
-                  addToCart({
-                    id: product.id,
-                    title: product.attributes.title,
-                    desc: product.attributes.desc,
-                    price: product.attributes.price,
-                    img: product.attributes.img.data.attributes.url,
-                    oldprice: product.attributes.oldprice,
-                    quantity: count,
-                  })
+                  addToCart([
+                    {
+                      id: product.id,
+                      title: product.attributes.title,
+                      desc: product.attributes.desc,
+                      price: product.attributes.price,
+                      img: product.attributes.img.data.attributes.url,
+                      oldprice: product.attributes.oldprice,
+                      quantity: count,
+                    },
+                  ])
                 );
               }}
             >
