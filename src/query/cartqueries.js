@@ -8,12 +8,4 @@ export const getCart = async (token) => {
   return data;
 };
 
-export const updateCart = async (token, cartid, cart) => {
-  const { data } = await makeRequestWithToken(token).put(`/carts/${cartid}`, {
-    data: {
-      mycart: cart,
-    },
-  });
-  console.log(data, "update cart");
-  return data;
-};
+
