@@ -1,4 +1,5 @@
 import { Box, Button, Container, Stack } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const HomeBanner = () => {
   return (
@@ -65,9 +66,11 @@ const HomeBanner = () => {
             your day
           </Box>
           <Box>
+            <Link to="/products">
             <Button bgColor="#263A45" color="white" px="5" py="6">
               Choose A Gift
             </Button>
+            </Link>
           </Box>
         </Container>
       </Stack>

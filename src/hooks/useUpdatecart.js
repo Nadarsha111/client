@@ -15,7 +15,6 @@ const useUpdatecart = () => {
           mycart: products,
         },
       });
-      console.log(data, "update cart");
       return data;
     };
     updateCart();

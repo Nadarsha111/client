@@ -12,17 +12,26 @@ import HomeBanner from "../components/home/HomeBanner";
 import ProductPageLayout from "../components/ProductList/ProductPageLayout";
 import useFetch from "../hooks/useFetch";
 import useUpdatecart from "../hooks/useUpdatecart";
+import { makeRequest } from "../makeRequest";
+import { isError, useQuery } from "@tanstack/react-query";
+import { homeproducts, homecatagories } from "../query/queries";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
-  useUpdatecart();
-  const { data: homePagemap, error: homepagemap } = useFetch(
-    "/catagories?fields[0]=title&fields[1]=description&populate[0]=img"
-  );
-  const { data: homeproducts, error: homeproductFetchError } = useFetch(
-    "/products?populate=*"
-  );
+  //useUpdatecart();
+  const {
+    data: homePagemap,
+    isLoading,
+    isError: homepagemap,
+  } = useQuery(["homepagemap"], homecatagories);
 
-  if (homeproductFetchError || homepagemap) {
+  const { data, isError } = useQuery(["homeproducts"], homeproducts);
+  // console.log(homePagemap, "homeproducts");
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError || homepagemap) {
     return <div>Something went wrong in home</div>;
   }
 
@@ -44,7 +53,12 @@ const HomePage = () => {
           >
             {homePagemap &&
               homePagemap.map((page) => (
-                <Box key={page.id} position="relative">
+                <Box
+                  as={Link}
+                  to={page.attributes.route}
+                  key={page.id}
+                  position="relative"
+                >
                   <Card
                     w={{
                       base: "150px",
@@ -102,16 +116,18 @@ const HomePage = () => {
             <Text>Popular Gift Collection</Text>
           </Box>
           {/* isLoading={isLoading} */}
-          <ProductPageLayout data={homeproducts} />
+          <ProductPageLayout data={data} />
           <Box align="center" mt="10">
-            <Button
-              bgColor="#263A45"
-              color="white"
-              fontSize="16px"
-              fontWeight="400"
-            >
-              View All
-            </Button>
+            <Link to="/products">
+              <Button
+                bgColor="#263A45"
+                color="white"
+                fontSize="16px"
+                fontWeight="400"
+              >
+                View All
+              </Button>
+            </Link>
           </Box>
           <Box w="full" mt="10">
             <Box align="center">

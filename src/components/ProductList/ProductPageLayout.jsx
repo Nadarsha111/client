@@ -1,17 +1,23 @@
 import { SimpleGrid, Skeleton } from "@chakra-ui/react";
 import ProductCard from "./ProductCard";
+import { useSelector } from "react-redux";
+import useUpdatecart from "../../hooks/useUpdatecart";
 
 const ProductPageLayout = ({ data, isLoading }) => {
+  useUpdatecart();
+  const added=useSelector(state=>state.cart.products);
   if (!data) {
     return null;
   }
+
   // console.log(data);
+  
   return (
     <SimpleGrid
       columns={{
         base: "2",
         md: "2",
-        lg: "3",
+        lg: "4",
         xl: "4",
       }}
       gap={{
@@ -32,6 +38,7 @@ const ProductPageLayout = ({ data, isLoading }) => {
             price={value?.attributes?.price}
             oldprice={value?.attributes?.oldprice}
             desc={value?.attributes?.desc}
+            added={!!added.find((item)=>item.id===value.id)}
           />
         </Skeleton>
       ))}

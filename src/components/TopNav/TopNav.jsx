@@ -156,7 +156,6 @@ const TopNav = ({ children }) => {
         >
           {isBaseDevice ? (
             <SideDrawer
-              links={pages}
               isOpen={isMobileMenuOpen}
               onClose={handleMobileMenuToggle}
             />

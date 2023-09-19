@@ -11,7 +11,16 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-const SideDrawer = ({ links, isOpen, onClose }) => {
+const SideDrawer = ({ isOpen, onClose }) => {
+  const links = [
+    { text: "Home", link: "/" },
+    { text: "Frames", link: "/photo-frames" },
+    { text: "Hamper", link: "/hamper" },
+    { text: "Wrapping Sheet", link: "/wrappingsheet" },
+    { text: "Gift Box", link: "/gift-box" },
+    { text: `Cart`, link: "/cart" },
+    { text: "Contact Us", link: "/contact" },
+  ];
   return (
     <>
       <Drawer isOpen={isOpen} onClose={onClose} placement="left" size="sm">

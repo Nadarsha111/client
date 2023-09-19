@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   IconButton,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsLightningCharge } from "react-icons/bs";
@@ -16,18 +17,51 @@ import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import TopNav from "../../components/TopNav/TopNav";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { changeINPrice, formatPrice } from "../../hooks/priceRealated";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/slice/cartControl";
+import useUpdatecart from "../../hooks/useUpdatecart";
 
 const Singleproduct = () => {
-  const id = useParams().id;
+  useUpdatecart();
+  const toasts = useToast();
+  const toastadded = () => {
+    toasts({
+      title: "Item Added",
+      description: "Item added to cart",
+      status: "success",
+      duration: 1000,
+      position: "top-right",
+      variant: "left-accent",
+    });
+  };
+  const { id } = useParams();
+  const added = useSelector((state) =>
+    state.cart.products.some((item) => item.id == id)
+  );
+
   const { data: product } = useFetch(`/products/${id}?populate=*`);
   const [count, setCount] = useState(1);
 
   const dispatch = useDispatch();
+  const addingtocart = () => {
+    dispatch(
+      addToCart([
+        {
+          id: product.id,
+          title: product.attributes.title,
+          desc: product.attributes.desc,
+          price: product.attributes.price,
+          img: product.attributes.img.data.attributes.url,
+          oldprice: product.attributes.oldprice,
+          quantity: count,
+        },
+      ])
+    );
+    toastadded();
+  };
 
   const increment = () => {
     setCount(count + 1);
@@ -37,9 +71,7 @@ const Singleproduct = () => {
       setCount(count - 1);
     }
   };
-  // console.log(product?.attributes?.catagories.data[0].attributes.title==="Photo Frames");
 
-  // console.log(product?.attributes.slider.data[0].id)
   return (
     <TopNav>
       <HStack
@@ -177,31 +209,36 @@ const Singleproduct = () => {
             px={["10", "0"]}
             mt={["8", "0"]}
           >
-            <Button
-              bgColor="#263A45"
-              color="white"
-              fontSize="16px"
-              fontWeight="400"
-              size="lg"
-              leftIcon={<AiOutlineShoppingCart size={"20px"} />}
-              onClick={() => {
-                dispatch(
-                  addToCart([
-                    {
-                      id: product.id,
-                      title: product.attributes.title,
-                      desc: product.attributes.desc,
-                      price: product.attributes.price,
-                      img: product.attributes.img.data.attributes.url,
-                      oldprice: product.attributes.oldprice,
-                      quantity: count,
-                    },
-                  ])
-                );
-              }}
-            >
-              Add to Cart
-            </Button>
+            {added ? (
+              <Button
+                as={Link}
+                bgColor="#263A45"
+                color="white"
+                fontSize="16px"
+                fontWeight="400"
+                size="lg"
+                to="/cart"
+                leftIcon={<AiOutlineShoppingCart size={"20px"} />}
+                loadingText="Adding"
+                isLoading={false}
+              >
+                Go to Cart
+              </Button>
+            ) : (
+              <Button
+                bgColor="#263A45"
+                color="white"
+                fontSize="16px"
+                fontWeight="400"
+                size="lg"
+                leftIcon={<AiOutlineShoppingCart size={"20px"} />}
+                onClick={addingtocart}
+                loadingText="Adding"
+                isLoading={false}
+              >
+                Add to Cart
+              </Button>
+            )}
 
             <Button
               bgColor="#263A45"

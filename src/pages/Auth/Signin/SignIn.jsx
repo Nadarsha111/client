@@ -21,9 +21,8 @@ import { object, string } from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../../../redux/slice/authReducer";
-import { getCart, updateCart } from "../../../query/cartqueries";
+import { getCart } from "../../../query/cartqueries";
 import { addToCart, cartid } from "../../../redux/slice/cartControl";
-import useUpdatecart from "../../../hooks/useUpdatecart";
 
 const validationSchema = object({
   email: string().email("Invalid email address").required("Email is required"),

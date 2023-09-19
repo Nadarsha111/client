@@ -11,7 +11,6 @@ import { CartItem } from "../components/cart/CartItem";
 import { CartOrderSummary } from "../components/cart/CartOrderSummary";
 import TopNav from "../components/TopNav/TopNav";
 import { useSelector } from "react-redux";
-import { updateCart } from "../query/cartqueries";
 import useUpdatecart from "../hooks/useUpdatecart";
 
 const Cart = () => {

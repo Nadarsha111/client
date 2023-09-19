@@ -12,6 +12,10 @@ import VerificationSuccess from "./pages/Auth/VerificationSucess/VerificationSuc
 import ForgotPass from "./pages/Auth/ForgotPass/ForgotPass";
 import PassReset from "./pages/Auth/PassReset/PassReset";
 import EmailSend from "./pages/Auth/EmailSendSuccesfully/EmailSend";
+import Gifts from "./pages/productpages/Gifts";
+import Frames from "./pages/productpages/Frames";
+import WeddingGift from "./pages/productpages/WeddingGift";
+import Hamper from "./pages/productpages/Hamper";
 
 function App() {
   const router = createBrowserRouter([
@@ -19,7 +23,7 @@ function App() {
     { path: "/products", element: <Products /> },
     { path: "/contact", element: <Contact /> },
     { path: "/cart", element: <Cart /> },
-    { path: "/product/:id", element: <Singleproduct /> },
+    { path: "/product/:id/:title", element: <Singleproduct /> },
     { path: "/signup", element: <Signup /> },
     { path: "/signin", element: <SignIn /> },
     { path: "/email-verify", element: <Emailverify /> },
@@ -27,6 +31,10 @@ function App() {
     { path: "/forgot-password", element: <ForgotPass /> },
     { path: "/reset-password", element: <PassReset /> },
     { path: "/email-sent-successfully", element: <EmailSend /> },
+    { path: "/gift-box", element: <Gifts /> },
+    { path: "/photo-frames", element: <Frames /> },
+    { path: "/wrappingsheet", element: <WeddingGift /> },
+    { path: "/hamper", element: <Hamper /> },
   ]);
 
   return (
