@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   SimpleGrid,
+  Skeleton,
   Stack,
   Text,
   useUpdateEffect,
@@ -10,7 +11,6 @@ import {
 import TopNav from "../components/TopNav/TopNav";
 import HomeBanner from "../components/home/HomeBanner";
 import ProductPageLayout from "../components/ProductList/ProductPageLayout";
-import useFetch from "../hooks/useFetch";
 import useUpdatecart from "../hooks/useUpdatecart";
 import { makeRequest } from "../makeRequest";
 import { isError, useQuery } from "@tanstack/react-query";
@@ -26,10 +26,6 @@ const HomePage = () => {
   } = useQuery(["homepagemap"], homecatagories);
 
   const { data, isError } = useQuery(["homeproducts"], homeproducts);
-  // console.log(homePagemap, "homeproducts");
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (isError || homepagemap) {
     return <div>Something went wrong in home</div>;
@@ -38,7 +34,9 @@ const HomePage = () => {
   return (
     <TopNav>
       <Stack spacing="0" overflowX="hidden">
-        <HomeBanner />
+        <Skeleton isLoaded={!isLoading}>
+          <HomeBanner />
+        </Skeleton>
         <Stack py={["15px", "80px"]}>
           <SimpleGrid
             columns={{
@@ -59,48 +57,48 @@ const HomePage = () => {
                   key={page.id}
                   position="relative"
                 >
-                  <Card
-                    w={{
-                      base: "150px",
-                      md: "300px",
-                      lg: "230px",
-                      xl: "300px",
-                    }}
-                    h={["160px", "260px"]}
-                    bgImage={`url(${import.meta.env.VITE_REACT_API_UPLOAD_URL}${
-                      page?.attributes?.img?.data?.attributes?.url
-                    })`}
-                    bgSize="cover"
-                    bgPosition="center"
-                    borderRadius="20px"
-                  />
-                  <Box
-                    left="0"
-                    right="0"
-                    bottom="10px"
-                    zIndex="1"
-                    position="absolute"
-                    textAlign="center"
-                  >
-                    <Text
-                      fontSize="24px"
-                      fontWeight="500"
-                      color="white"
-                      margin="16px"
-                      textAlign={"center"}
+                    <Card
+                      w={{
+                        base: "150px",
+                        md: "300px",
+                        lg: "230px",
+                        xl: "300px",
+                      }}
+                      h={["160px", "260px"]}
+                      bgImage={`url(${
+                        import.meta.env.VITE_REACT_API_UPLOAD_URL
+                      }${page?.attributes?.img?.data?.attributes?.url})`}
+                      bgSize="cover"
+                      bgPosition="center"
+                      borderRadius="20px"
+                    />
+                    <Box
+                      left="0"
+                      right="0"
+                      bottom="10px"
+                      zIndex="2"
+                      position="absolute"
+                      textAlign="center"
                     >
-                      {page.attributes.title}
-                    </Text>
-                    <Text
-                      fontSize="md"
-                      fontWeight="400"
-                      color="white"
-                      margin="16px"
-                      display={{ base: "none", md: "block" }}
-                    >
-                      {page.attributes.description}
-                    </Text>
-                  </Box>
+                      <Text
+                        fontSize="24px"
+                        fontWeight="500"
+                        color="white"
+                        margin="16px"
+                        textAlign={"center"}
+                      >
+                        {page.attributes.title}
+                      </Text>
+                      <Text
+                        fontSize="md"
+                        fontWeight="400"
+                        color="white"
+                        margin="16px"
+                        display={{ base: "none", md: "block" }}
+                      >
+                        {page.attributes.description}
+                      </Text>
+                    </Box>
                 </Box>
               ))}
           </SimpleGrid>
@@ -116,7 +114,7 @@ const HomePage = () => {
             <Text>Popular Gift Collection</Text>
           </Box>
           {/* isLoading={isLoading} */}
-          <ProductPageLayout data={data} />
+          <ProductPageLayout data={data} isLoading={isLoading}/>
           <Box align="center" mt="10">
             <Link to="/products">
               <Button

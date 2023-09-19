@@ -1,4 +1,12 @@
-import { wrappingsheet, frames, gift, hamper, home,homecat} from "../constants/contants";
+import {
+  wrappingsheet,
+  frames,
+  gift,
+  hamper,
+  home,
+  homecat,
+  products,
+} from "../constants/contants";
 import { makeRequest } from "../makeRequest";
 
 /* eslint-disable no-useless-catch */
@@ -12,13 +20,13 @@ export const homeproducts = async () => {
 };
 
 export const homecatagories = async () => {
-      try {
-      const { data } = await makeRequest.get(homecat);
-      return data.data;
-      } catch (error) {
-      throw error;
-      }
-      }
+  try {
+    const { data } = await makeRequest.get(homecat);
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const giftpage = async () => {
   try {
@@ -27,7 +35,7 @@ export const giftpage = async () => {
   } catch (error) {
     throw error;
   }
-}
+};
 export const framespage = async () => {
   try {
     const { data } = await makeRequest.get(frames);
@@ -35,7 +43,7 @@ export const framespage = async () => {
   } catch (error) {
     throw error;
   }
-}
+};
 export const hamperpage = async () => {
   try {
     const { data } = await makeRequest.get(hamper);
@@ -43,7 +51,7 @@ export const hamperpage = async () => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 export const wrappingsheetPage = async () => {
   try {
@@ -52,4 +60,23 @@ export const wrappingsheetPage = async () => {
   } catch (error) {
     throw error;
   }
-}
+};
+
+export const productpage = async () => {
+  try {
+    const { data } = await makeRequest.get(products);
+    console.log(data.data);
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const sigleproductpage = async (id) => {
+  try {
+    const { data } = await makeRequest.get(`/products/${id}?populate=*`);
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
+};
