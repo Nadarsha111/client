@@ -65,7 +65,7 @@ export const wrappingsheetPage = async () => {
 export const productpage = async () => {
   try {
     const { data } = await makeRequest.get(products);
-    console.log(data.data);
+    console.log(data);
     return data.data;
   } catch (error) {
     throw error;

@@ -16,7 +16,7 @@ import Gifts from "./pages/productpages/Gifts";
 import Frames from "./pages/productpages/Frames";
 import WeddingGift from "./pages/productpages/WeddingGift";
 import Hamper from "./pages/productpages/Hamper";
-
+import Pagination from "./components/ProductList/Pagination"
 function App() {
   const router = createBrowserRouter([
     { path: "/", element: <HomePage /> },
@@ -35,6 +35,7 @@ function App() {
     { path: "/photo-frames", element: <Frames /> },
     { path: "/wrappingsheet", element: <WeddingGift /> },
     { path: "/hamper", element: <Hamper /> },
+    {path:"/pagination",element:<Pagination/>}
   ]);
 
   return (
